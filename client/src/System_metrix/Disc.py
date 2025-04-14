@@ -1,4 +1,6 @@
 import psutil
+import time
+
 class Disc:
     def __init__(self):
         pass
@@ -62,23 +64,32 @@ class Disc:
             raise NotImplementedError("Free disk space is not supported on this platform.")
 
     @staticmethod
-    def get_disk_write_rate() -> float:
+    def get_disk_write_rate(interval: int = 1) -> float:
         """
-        Get the disk write rate.
+        Get the disk write rate over a specified interval.
+        :param interval: Time interval in seconds to calculate the write rate.
         :return: Disk write rate in bytes per second.
         """
         try:
-            return psutil.disk_io_counters().write_bytes
+            initial = psutil.disk_io_counters().write_bytes
+            time.sleep(interval)
+            final = psutil.disk_io_counters().write_bytes
+            return (final - initial) / interval
         except AttributeError:
             raise NotImplementedError("Disk write rate is not supported on this platform.")
 
     @staticmethod
-    def get_disk_read_rate() -> float:
+    def get_disk_read_rate(interval: int = 1) -> float:
         """
-        Get the disk read rate.
+        Get the disk read rate over a specified interval.
+        :param interval: Time interval in seconds to calculate the read rate.
         :return: Disk read rate in bytes per second.
         """
         try:
-            return psutil.disk_io_counters().read_bytes
+            initial = psutil.disk_io_counters().read_bytes
+            time.sleep(interval)
+            final = psutil.disk_io_counters().read_bytes
+            return (final - initial) / interval
         except AttributeError:
             raise NotImplementedError("Disk read rate is not supported on this platform.")
+
