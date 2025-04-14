@@ -25,15 +25,14 @@ class Processes:
         """
         processes = []
         try:
-            for proc in psutil.process_iter(['pid', 'name', 'username']):
+            for i, proc in enumerate(psutil.process_iter(['pid', 'name', 'username'])):
+                if n is not None and i >= n:
+                    break
                 try:
                     processes.append(proc.info)
                 except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                     continue
         except Exception as e:
             raise RuntimeError(f"An error occurred while retrieving processes: {e}")
-
-        if n is not None:
-            return processes[:n]
 
         return processes
