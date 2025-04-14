@@ -13,3 +13,11 @@ class CPU:
         :return: CPU usage percentage
         """
         return psutil.cpu_percent(interval=1)
+
+    @staticmethod
+    def get_load_average() -> tuple:
+        """
+        Get the load average for the CPU.
+        :return: Load average as a tuple (1 min, 5 min, 15 min)
+        """
+        return psutil.getloadavg()
