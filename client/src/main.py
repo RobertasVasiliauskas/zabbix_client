@@ -1,7 +1,4 @@
-from CPU import CPU
-from RAM import RAM
-from Disc import Disc
-from Processes import Processes
+from System_metrix import CPU, RAM, Disc, Processes
 
 def show_cpu_info():
     cpu_usage = cpu.get_cpu_usage(1)
