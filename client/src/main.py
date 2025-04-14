@@ -1,6 +1,7 @@
 from CPU import CPU
 from RAM import RAM
 from Disc import Disc
+from Processes import Processes
 
 def show_cpu_info():
     cpu_usage = cpu.get_cpu_usage(1)
@@ -11,10 +12,11 @@ def show_cpu_info():
     print(f" > Total CPU usage: {cpu_usage:.2f}%")
 
     print(f" > Per-core usage:")
-    for i, core in enumerate(per_core_usage, start=1):
-        print(f"   - Core {i}: {core:.2f}%")
-
     print(f" > Load average (1, 5, 15 min): {load_avg[0]:.2f}, {load_avg[1]:.2f}, {load_avg[2]:.2f}")
+    print(f"{'index'.ljust(10)}{'Usage (%)'.ljust(15)}")
+    print("-" * 25)
+    for i, core in enumerate(per_core_usage, start=1):
+        print(f"{f'Core {i}'.ljust(10)}{core:.2f}%".ljust(15))
 
 def show_ram_info():
     theoretical_memory = ram.get_theoretical_memory()
@@ -43,9 +45,24 @@ def show_disk_info():
     print(f" > Disk write rate: {disk_write_rate / (1024 ** 3):.2f} GB/s")
     print(f" > Disk read rate: {disk_read_rate / (1024 ** 3):.2f} GB/s")
 
-    print(f" > Disk usage per partition:")
+    print(f"{'Mount Point'.ljust(30)}{'Usage (%)'.ljust(15)}")
+    print("-" * 45)
     for mount_point, usage in partitions.items():
-        print(f"   - {mount_point}: {usage:.2f}% used")
+        print(f"{mount_point.ljust(30)}{usage:.2f}%")
+
+
+def show_processes_info():
+    count_processes = processes.get_count_processes()
+    processes_list = processes.get_processes(10)
+
+    print(f"\nProcesses Metrics:")
+    print(f" > Number of processes: {count_processes}")
+    print(f" > Processes:")
+    print(f"{'PID'.ljust(10)}{'Name'.ljust(40)}{'User'.ljust(20)}")
+    print("-" * 55)
+    for proc in processes_list:
+        print(f"{str(proc['pid']).ljust(10)}{proc['name'].ljust(25)}{proc['username'].ljust(20)}")
+
 
 if __name__ == '__main__':
     while True:
@@ -53,11 +70,13 @@ if __name__ == '__main__':
         cpu = CPU()
         ram = RAM()
         disc = Disc()
+        processes = Processes()
 
         try:
             show_cpu_info()
             show_ram_info()
             show_disk_info()
+            show_processes_info()
 
         except NotImplementedError as e:
             print(f"\nError: {e}")
