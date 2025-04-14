@@ -54,19 +54,19 @@ def show_processes_info():
 
     print(f"\nProcesses Metrics:")
     print(f" > Number of processes: {count_processes}")
-    print(f" > Processes:")
     print(f"{'PID'.ljust(10)}{'Name'.ljust(40)}{'User'.ljust(20)}")
-    print("-" * 55)
+    print("-" * 70)
     for proc in processes_list:
-        print(f"{str(proc['pid']).ljust(10)}{proc['name'].ljust(25)}{proc['username'].ljust(20)}")
+        print(f"{str(proc['pid']).ljust(10)}{proc['name'].ljust(40)}{proc['username'].ljust(20)}")
 
 
 if __name__ == '__main__':
-    while True:
 
-        cpu = CPU()
-        ram = RAM()
-        disc = Disc()
+    cpu = CPU()
+    ram = RAM()
+    disc = Disc()
+
+    while True:
         processes = Processes()
 
         try:
