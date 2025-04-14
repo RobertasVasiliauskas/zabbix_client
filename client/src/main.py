@@ -16,12 +16,14 @@ def show_cpu_info():
     print(f" > Load average (1, 5, 15 min): {load_avg[0]:.2f}, {load_avg[1]:.2f}, {load_avg[2]:.2f}")
 
 def show_ram_info():
+    theoretical_memory = ram.get_theoretical_memory()
     total_memory = ram.get_total_memory()
     free_memory = ram.get_available_memory()
     used_memory = ram.get_used_memory()
 
     print(f"\nRAM Metrics:")
-    print(f" > Total RAM size: {total_memory / (1024 ** 3):.2f} GB")
+    print(f" > Theoretical memory size: {theoretical_memory/ (1024 ** 3)} GB")
+    print(f" > Total usable RAM size: {total_memory / (1024 ** 3):.2f} GB")
     print(f" > Free RAM size: {free_memory / (1024 ** 3):.2f} GB")
     print(f" > Used RAM size: {used_memory / (1024 ** 3):.2f} GB")
 
