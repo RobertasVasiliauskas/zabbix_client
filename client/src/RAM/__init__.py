@@ -1,1 +1,1 @@
-from RAM import RAM
+from .RAM import RAM
