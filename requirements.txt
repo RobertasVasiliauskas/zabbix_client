@@ -1,0 +1,7 @@
+pip~=25.0.1
+attrs~=23.2.1.dev0
+spglib~=2.6.1.dev0+gc633404.d20250310
+wheel~=0.45.1
+cryptography~=44.0.2
+filelock~=3.18.0
+psutil~=7.0.0
