@@ -23,7 +23,10 @@ class Disc:
             except PermissionError:
                 print(f"Permission denied for mount point: {mounting_point.mountpoint}")
 
-        return partitions_info
+        try:
+            return partitions_info
+        except AttributeError:
+            raise NotImplementedError("Disk usage per partition is not supported on this platform.")
 
     @staticmethod
     def get_disk_total() -> float:
@@ -31,7 +34,10 @@ class Disc:
         Get the total disk space.
         :return: Total disk space in bytes.
         """
-        return psutil.disk_usage('/').total
+        try:
+            return psutil.disk_usage('/').total
+        except AttributeError:
+            raise NotImplementedError("Total disk space is not supported on this platform.")
 
     @staticmethod
     def get_disk_used() -> float:
@@ -39,7 +45,10 @@ class Disc:
         Get the used disk space.
         :return: Used disk space in bytes.
         """
-        return psutil.disk_usage('/').used
+        try:
+            return psutil.disk_usage('/').used
+        except AttributeError:
+            raise NotImplementedError("Used disk space is not supported on this platform.")
 
     @staticmethod
     def get_disk_free() -> float:
@@ -47,7 +56,10 @@ class Disc:
         Get the free disk space.
         :return: Free disk space in bytes.
         """
-        return psutil.disk_usage('/').free
+        try:
+            return psutil.disk_usage('/').free
+        except AttributeError:
+            raise NotImplementedError("Free disk space is not supported on this platform.")
 
     @staticmethod
     def get_disk_write_rate() -> float:
@@ -55,7 +67,10 @@ class Disc:
         Get the disk write rate.
         :return: Disk write rate in bytes per second.
         """
-        return psutil.disk_io_counters().write_bytes
+        try:
+            return psutil.disk_io_counters().write_bytes
+        except AttributeError:
+            raise NotImplementedError("Disk write rate is not supported on this platform.")
 
     @staticmethod
     def get_disk_read_rate() -> float:
@@ -63,5 +78,7 @@ class Disc:
         Get the disk read rate.
         :return: Disk read rate in bytes per second.
         """
-        return psutil.disk_io_counters().read_bytes
-
+        try:
+            return psutil.disk_io_counters().read_bytes
+        except AttributeError:
+            raise NotImplementedError("Disk read rate is not supported on this platform.")

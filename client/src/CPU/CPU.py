@@ -14,7 +14,10 @@ class CPU:
         :param interval: Time interval in seconds to calculate CPU usage.
         :return: CPU usage percentage as a float.
         """
-        return psutil.cpu_percent(interval=interval)
+        try:
+            return psutil.cpu_percent(interval=interval)
+        except AttributeError:
+            raise NotImplementedError("CPU usage is not supported on this platform.")
 
     @staticmethod
     def get_per_core_usage(interval: int) -> List[float]:
@@ -24,7 +27,10 @@ class CPU:
         :param interval: Time interval in seconds to calculate per-core CPU usage.
         :return: List of CPU usage percentages for each core.
         """
-        return psutil.cpu_percent(interval=interval, percpu=True)
+        try:
+            return psutil.cpu_percent(interval=interval, percpu=True)
+        except AttributeError:
+            raise NotImplementedError("Per-core CPU usage is not supported on this platform.")
 
     @staticmethod
     def get_load_average() -> Tuple[float, float, float]:
