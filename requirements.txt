@@ -1,7 +1,11 @@
-pip~=25.0.1
-attrs~=23.2.1.dev0
-spglib~=2.6.1.dev0+gc633404.d20250310
+pip>=23.2.1
+attrs~=25.3.0
+spglib~=2.6.0
 wheel~=0.45.1
 cryptography~=44.0.2
 filelock~=3.18.0
 psutil~=7.0.0
+cffi~=1.17.1
+numpy~=2.2.4
+ping3~=4.0.8
+pycparser~=2.22
