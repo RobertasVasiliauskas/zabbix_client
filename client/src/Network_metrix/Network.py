@@ -1,7 +1,6 @@
 import socket
 import time
 
-from numpy.ma.extras import average
 from ping3 import ping
 
 import psutil
@@ -15,17 +14,19 @@ class Network:
     @staticmethod
     def get_network_names():
         """"
-        Get the names of all network interfaces on the system.
-        :return: A list of network interface names.
+        Get the names of all network interfaces on the system
+        
+        :return: A list of network interface names
         """
         return psutil.net_if_addrs().keys()
 
     @staticmethod
     def get_network_interfaces(name: str = None) -> list[dict]:
         """
-        Get a list of network interfaces.
-        :param name: The network interface name.
-        :return: List of network interfaces represented as dicts.
+        Get a list of network interfaces
+        
+        :param name: The network interface name
+        :return: List of network interfaces represented as dicts
         """
         network_interfaces = []
 
@@ -56,9 +57,10 @@ class Network:
     def get_network_statuses(name: str = None) -> list[dict]:
 
         """
-        Get a list of network interface statuses.
-        :param name: The network interface name to get.
-        :return: A list of network interface statuses represented as dicts.
+        Get a list of network interface statuses
+        
+        :param name: The network interface name to get
+        :return: A list of network interface statuses represented as dicts
         """
 
         network_statuses = []
@@ -92,6 +94,7 @@ class Network:
     def get_network_packet_send() -> int:
         """
         Get number of send packets
+        
         :return: A number of send packets
         """
         return psutil.net_io_counters().packets_sent
@@ -107,8 +110,9 @@ class Network:
     @staticmethod
     def get_network_packet_dropped() -> dict:
         """
-        Get the number of dropped packets for sent and received data.
-        :return: A dictionary with dropped packets for sent and received data.
+        Get the number of dropped packets for sent and received data
+        
+        :return: A dictionary with dropped packets for sent and received data
         """
         io_counters = psutil.net_io_counters()
         return {
@@ -119,10 +123,10 @@ class Network:
     @staticmethod
     def get_network_bandwidth_upload(interval: int = 1) -> float:
         """
-        Calculate the upload bandwidth in bytes per second.
+        Calculate the upload bandwidth in bytes per second
 
-        :param interval: Time interval in seconds to measure bandwidth. Defaults to 1 second.
-        :return: Upload bandwidth in bytes per second.
+        :param interval: Time interval in seconds to measure bandwidth defaults to 1 second
+        :return: Upload bandwidth in bytes per second
         """
 
         initial_byte_send = psutil.net_io_counters().bytes_sent
@@ -134,10 +138,10 @@ class Network:
     @staticmethod
     def get_network_bandwidth_download(interval: int = 1) -> float:
         """
-        Calculate the download bandwidth in bytes per second.
+        Calculate the download bandwidth in bytes per second
 
-        :param interval: Optional; Time interval in seconds to measure bandwidth. Defaults to 1 second.
-        :return: Download bandwidth in bytes per second.
+        :param interval: Optional; Time interval in seconds to measure bandwidth defaults to 1 second
+        :return: Download bandwidth in bytes per second
         """
 
         initial_byte_recv = psutil.net_io_counters().bytes_recv
@@ -156,14 +160,14 @@ class Network:
             destination_host: The host to ping default('google.com')
             n: The number of ping attempts default(3)
             timeout: The timeout for each ping in seconds default(3)
-            unit: The unit of latency measurement ('ms' for milliseconds, 's' for seconds) default('ms').
+            unit: The unit of latency measurement ('ms' for milliseconds, 's' for seconds) default('ms')
 
         Returns:
-            float: The average latency in the specified unit, rounded to 2 decimal places.
+            float: The average latency in the specified unit, rounded to 2 decimal places
                    Returns -1.0 if all ping attempts fail.
 
         Raises:
-            PingError: If a ping attempt fails.
+            PingError: If a ping attempt fails
         """
         latency = []
 
@@ -176,7 +180,7 @@ class Network:
                 print(f"Ping attempt {i + 1} failed: {e}")
 
         if sum(latency) == 0:
-            print(f"All ping attempts to {destination_host} failed.")
+            print(f"All ping attempts to {destination_host} failed")
             return float(0)
 
         average_latency = sum(latency) / len(latency)
